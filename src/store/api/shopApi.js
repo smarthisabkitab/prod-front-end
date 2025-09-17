@@ -12,7 +12,7 @@ export const shopApi = apiSlice.injectEndpoints({
     }),
     createShop: builder.mutation({
       query: (shopData) => ({
-        url: '/shops',
+        url: '/shops/create/',
         method: 'POST',
         body: shopData,
       }),

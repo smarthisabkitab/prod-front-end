@@ -7,7 +7,8 @@ import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/Dashboard/DashboardPage";
 import ShopManagementPage from "./pages/Shop/page";
 import AddShopPage from "./pages/Shop/AddShopPage";
-import UserManagementPage from "./pages/UserManagementPage";
+import UserManagementPage from "./pages/Users/page";
+import AddUserPage from "./pages/Users/AddUserPage";
 import ConversionPage from "./pages/Conversion/page";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
@@ -73,6 +74,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <UserManagementPage />
+                </ProtectedRoute>
+              }
+            />
+             <Route
+              path="/user-management/add"
+              element={
+                <ProtectedRoute>
+                  <AddUserPage />
                 </ProtectedRoute>
               }
             />

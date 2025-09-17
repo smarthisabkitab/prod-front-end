@@ -1,16 +1,16 @@
-import React from 'react';
-import { Store, Users, PlusCircle, Receipt, Zap } from 'lucide-react';
+import React from "react";
+import { Store, Users, PlusCircle, Receipt, Zap } from "lucide-react";
 
 const QuickActions = ({ actions, navigate }) => {
   const getIcon = (title) => {
-    switch(title) {
-      case 'Manage Shops':
+    switch (title) {
+      case "Manage Shops":
         return <Store className="h-5 w-5" />;
-      case 'Manage Users':
+      case "Manage Users":
         return <Users className="h-5 w-5" />;
-      case 'Add New Item':
+      case "Add New Item":
         return <PlusCircle className="h-5 w-5" />;
-      case 'Record Sale':
+      case "Record Sale":
         return <Receipt className="h-5 w-5" />;
       default:
         return <Store className="h-5 w-5" />;
@@ -31,7 +31,7 @@ const QuickActions = ({ actions, navigate }) => {
             <button
               key={index}
               onClick={() => navigate(action.path)}
-              className={`w-full flex items-center justify-center space-x-2 text-white px-4 py-3 rounded-lg transition-all transform hover:-translate-y-0.5 hover:shadow-md ${action.color}`}
+              className={`w-full flex items-center justify-center space-x-2 text-white px-4 py-3 rounded-lg transition-all transform hover:-translate-y-0.5 hover:shadow-md ${action.color} hover:cursor-pointer`}
             >
               {getIcon(action.title)}
               <span>{action.title}</span>

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useCreateShopMutation } from "../../store/api/shopApi";
-import { shopSchema } from "../../utils/validationSchemas";
+import { shopSchema } from "../../utils/validations/shop.schema";
 import DashboardLayout from "../../components/layout/dashboard.layout";
 import { useNavigate } from "react-router-dom";
 
@@ -30,8 +30,8 @@ const AddShopPage = () => {
 
   return (
     <DashboardLayout>
-      <main className="max-w-xl mx-auto py-10">
-        <div className="bg-white shadow rounded-lg p-8">
+      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div className=" bg-white shadow rounded-lg p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">
             Add New Shop
           </h2>

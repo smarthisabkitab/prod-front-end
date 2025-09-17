@@ -2,16 +2,17 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   useGetUsersQuery,
   useCreateUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
-} from "../store/api/userApi";
-import { useGetShopsQuery } from "../store/api/shopApi";
-import { userSchema, userCreateSchema } from "../utils/validationSchemas";
-import { logout } from "../store/slices/authSlice";
+} from "../../store/api/userApi";
+import { useGetShopsQuery } from "../../store/api/shopApi";
+import { userSchema, userCreateSchema } from "../../utils/validationSchemas";
+import { logout } from "../../store/slices/authSlice";
+import DashboardLayout from "../../components/layout/dashboard.layout";
 
 const UserManagementPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -113,10 +114,10 @@ const UserManagementPage = () => {
     }
   };
 
-  const getShopName = (shopId) => {
-    const shop = shops.find((s) => s.id === shopId);
-    return shop ? shop.name : "Unknown Shop";
-  };
+  // const getShopName = (shopId) => {
+  //   const shop = shops.find((s) => s.id === shopId);
+  //   return shop ? shop.name : "Unknown Shop";
+  // };
 
   if (error) {
     return (
@@ -140,48 +141,18 @@ const UserManagementPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div className="flex items-center space-x-4">
-              <h1 className="text-2xl font-bold text-yellow-800">
-                User Management
-              </h1>
-              <button
-                onClick={() => navigate("/dashboard")}
-                className="text-yellow-600 hover:text-yellow-700"
-              >
-                ← Back to Dashboard
-              </button>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="text-sm text-gray-700">
-                Welcome, {user?.name || "User"}
-              </div>
-              <button
-                onClick={handleLogout}
-                className="bg-yellow-600 text-white px-4 py-2 rounded-md hover:bg-yellow-700 transition-colors"
-              >
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
+    <DashboardLayout>
       {/* Main Content */}
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         {/* Header Actions */}
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold text-gray-900">Users</h2>
-          <button
-            onClick={() => openModal()}
-            className="bg-yellow-600 text-white px-4 py-2 rounded-md hover:bg-yellow-700 transition-colors"
+          <Link
+            to="/user-management/add"
+            className="bg-yellow-600 text-white px-6 py-2 rounded-md hover:bg-yellow-700 transition-colors font-semibold shadow"
           >
-            Add New User
-          </button>
+            Add User
+          </Link>
         </div>
 
         {/* Users Table */}
@@ -242,7 +213,7 @@ const UserManagementPage = () => {
                               {user.fullname ?? ""}
                             </div>
                             <div className="text-sm text-gray-500">
-                              {user.email ??""}
+                              {user.email ?? ""}
                             </div>
                           </div>
                         </div>
@@ -260,7 +231,7 @@ const UserManagementPage = () => {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {getShopName(user.shopId)}
+                        {/* {getShopName(user.shopId)} */} XYZ Company
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span
@@ -508,7 +479,7 @@ const UserManagementPage = () => {
           </div>
         </div>
       )}
-    </div>
+    </DashboardLayout>
   );
 };
 
