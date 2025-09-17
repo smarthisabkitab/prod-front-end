@@ -20,7 +20,7 @@ const HomePage = () => {
         <DownloadAppSection />
         
       </div>
-      <Footer />
+      <Footer />x
     </div>
   );
 };
