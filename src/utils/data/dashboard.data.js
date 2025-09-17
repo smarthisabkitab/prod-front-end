@@ -60,9 +60,9 @@ export const quickActions = [
     color: "bg-emerald-600 hover:bg-emerald-700",
   },
   {
-    title: "Add New Item",
-    path: "/add-item",
-    color: "bg-blue-600 hover:bg-blue-700",
+    title: "Conversion",
+    path: "/conversion",
+    color: "bg-indigo-600 hover:bg-indigo-700",
   },
   {
     title: "Record Sale",

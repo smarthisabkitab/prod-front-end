@@ -1,5 +1,12 @@
 import React from "react";
-import { Store, Users, PlusCircle, Receipt, Zap } from "lucide-react";
+import {
+  Store,
+  Users,
+  PlusCircle,
+  Receipt,
+  Zap,
+  RotateCcw,
+} from "lucide-react";
 
 const QuickActions = ({ actions, navigate }) => {
   const getIcon = (title) => {
@@ -12,6 +19,8 @@ const QuickActions = ({ actions, navigate }) => {
         return <PlusCircle className="h-5 w-5" />;
       case "Record Sale":
         return <Receipt className="h-5 w-5" />;
+      case "Conversion":
+        return <RotateCcw className="h-5 w-5" />;
       default:
         return <Store className="h-5 w-5" />;
     }
