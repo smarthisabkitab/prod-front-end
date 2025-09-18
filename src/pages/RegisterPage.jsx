@@ -7,10 +7,12 @@ import { Eye, EyeOff, UserPlus, Sparkles, Gem } from "lucide-react";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    fullname: "",
     email: "",
     password: "",
     confirmPassword: "",
+    phone_no: "",
+    address: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -84,16 +86,16 @@ const RegisterPage = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label
-              htmlFor="name"
+              htmlFor="fullname"
               className="block text-sm font-medium text-amber-800 mb-2"
             >
               Full Name
             </label>
             <input
               type="text"
-              id="name"
-              name="name"
-              value={formData.name}
+              id="fullname"
+              name="fullname"
+              value={formData.fullname}
               onChange={handleChange}
               required
               className="w-full px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 text-amber-900 placeholder-amber-500/60 transition-colors"
@@ -117,6 +119,44 @@ const RegisterPage = () => {
               required
               className="w-full px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 text-amber-900 placeholder-amber-500/60 transition-colors"
               placeholder="Enter your email"
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="phone_no"
+              className="block text-sm font-medium text-amber-800 mb-2"
+            >
+              Phone No.
+            </label>
+            <input
+              type="number"
+              id="phone_no"
+              name="phone_no"
+              value={formData.phone_no}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 text-amber-900 placeholder-amber-500/60 transition-colors"
+              placeholder="Enter your number"
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="address"
+              className="block text-sm font-medium text-amber-800 mb-2"
+            >
+              Address
+            </label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 text-amber-900 placeholder-amber-500/60 transition-colors"
+              placeholder="Enter your address"
             />
           </div>
 
@@ -181,7 +221,7 @@ const RegisterPage = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-3 px-4 rounded-xl hover:from-amber-600 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 shadow-md hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+            className="w-full hover:cursor-pointer bg-gradient-to-r from-amber-500 to-orange-500 text-white py-3 px-4 rounded-xl hover:from-amber-600 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 shadow-md hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
           >
             {isLoading ? (
               <>
