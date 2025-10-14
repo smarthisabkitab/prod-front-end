@@ -4,10 +4,11 @@ import {
   useDeleteShopMutation,
 } from "../../store/api/shopApi";
 import DashboardLayout from "../../components/layout/dashboard.layout";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ErrorComponent from "../../components/ui/ErrorComponent";
 
 const ShopManagementPage = () => {
+  let navigate = useNavigate();
   const [deleteConfirm, setDeleteConfirm] = useState(null);
 
   const { data: shops = [], isLoading, error } = useGetShopsQuery();
@@ -20,6 +21,10 @@ const ShopManagementPage = () => {
     } catch (err) {
       console.error("Failed to delete shop:", err);
     }
+  };
+
+  const handleShopTransaction = (shop) => {
+    navigate(`/shop/transactions/${shop.id}`);
   };
 
   if (error) <ErrorComponent />;
@@ -69,9 +74,13 @@ const ShopManagementPage = () => {
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
+                    <tbody className="bg-white divide-y divide-gray-200 hover:cursor-pointer">
                       {shops.items.map((shop) => (
-                        <tr key={shop.id} className="hover:bg-gray-50">
+                        <tr
+                          key={shop.id}
+                          className="hover:bg-gray-50"
+                          onClick={() => handleShopTransaction(shop)}
+                        >
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div>
                               <div className="text-sm font-medium text-gray-900">
