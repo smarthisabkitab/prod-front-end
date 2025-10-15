@@ -8,7 +8,19 @@ export const transactionApi = apiSlice.injectEndpoints({
         { type: "Transaction", shopId },
       ],
     }),
+
+    uploadShopTransaction: builder.mutation({
+      query: ({ shopId, formData }) => ({
+        url: `/shop-transaction/upload/${shopId}`,
+        method: "POST",
+        body: formData,
+      }),
+      invalidatesTags: ["Transaction"],
+    }),
   }),
 });
 
-export const { useGetShopTransactionsQuery } = transactionApi;
+export const {
+  useGetShopTransactionsQuery,
+  useUploadShopTransactionMutation,
+} = transactionApi;

@@ -11,6 +11,7 @@ import UserManagementPage from "./pages/Users/page";
 import AddUserPage from "./pages/Users/AddUserPage";
 import ConversionPage from "./pages/Conversion/page";
 import TransactionsPage from "./pages/Transactions/page";
+import UploadTransactionPage from "./pages/Transactions/upload.transaction.page";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
@@ -68,6 +69,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <TransactionsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/shop/upload-transaction/:id"
+              element={
+                <ProtectedRoute>
+                  <UploadTransactionPage />
                 </ProtectedRoute>
               }
             />
