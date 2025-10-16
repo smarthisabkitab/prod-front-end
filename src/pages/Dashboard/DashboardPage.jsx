@@ -1,75 +1,74 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-
-// Import components
-import StatsCard from "../../components/dashboard/StatsCard";
-import RecentActivity from "../../components/dashboard/RecentActivity";
-import QuickActions from "../../components/dashboard/QuickActions";
-import RecentSales from "../../components/dashboard/RecentSales";
-
-// Layout
+import { Store, Users, RefreshCcw, User } from "lucide-react";
 import DashboardLayout from "../../components/layout/dashboard.layout";
 
-// Data
-import {
-  statsData,
-  recentActivities,
-  quickActions,
-  recentSales,
-} from "../../utils/data/dashboard.data";
+const quickActions = [
+  {
+    title: "Shops",
+    description: "Manage all your registered shops",
+    icon: <Store className="w-8 h-8 text-blue-500" />,
+    path: "/shop",
+    color: "bg-blue-50 hover:bg-blue-100",
+  },
+  {
+    title: "Users",
+    description: "View and manage users",
+    icon: <Users className="w-8 h-8 text-green-500" />,
+    path: "/user-management",
+    color: "bg-green-50 hover:bg-green-100",
+  },
+  {
+    title: "Conversion",
+    description: "Check shop conversions and reports",
+    icon: <RefreshCcw className="w-8 h-8 text-purple-500" />,
+    path: "/conversion",
+    color: "bg-purple-50 hover:bg-purple-100",
+  },
+  {
+    title: "Profile",
+    description: "Update your personal information",
+    icon: <User className="w-8 h-8 text-orange-500" />,
+    path: "/#",
+    color: "bg-orange-50 hover:bg-orange-100",
+  },
+];
 
 const DashboardPage = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("overview");
 
   return (
     <DashboardLayout>
-      {/* Tabs */}
-      <div className="w-full mb-6">
-        <div className="flex space-x-1 bg-white rounded-lg shadow-sm p-1">
-          {["overview", "inventory", "sales", "reports", "settings"].map(
-            (tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-                  activeTab === tab
-                    ? "bg-amber-500 text-white shadow"
-                    : "text-gray-600 hover:text-amber-700 hover:bg-amber-50"
-                }`}
-              >
-                {tab.charAt(0).toUpperCase() + tab.slice(1)}
-              </button>
-            )
-          )}
-        </div>
-      </div>
+      <div className="p-6">
+        {/* Heading */}
+        <h1 className="text-2xl font-semibold mb-6">Welcome back 👋</h1>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {statsData.map((stat, index) => (
-          <StatsCard
-            key={index}
-            title={stat.title}
-            value={stat.value}
-            change={stat.change}
-            changePositive={stat.changePositive}
-          />
-        ))}
-      </div>
-
-      {/* Main Dashboard Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Recent Activity */}
-        <div className="lg:col-span-2">
-          <RecentActivity activities={recentActivities} />
+        {/* Quick Actions */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {quickActions.map((action, idx) => (
+            <div
+              key={idx}
+              onClick={() => navigate(action.path)}
+              className={`cursor-pointer p-5 rounded-2xl shadow-md transition-all duration-200 ${action.color}`}
+            >
+              <div className="flex items-center gap-4">
+                {action.icon}
+                <div>
+                  <h2 className="text-lg font-medium">{action.title}</h2>
+                  <p className="text-sm text-gray-600">{action.description}</p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* Quick Actions & Recent Sales */}
-        <div className="lg:col-span-1">
-          <QuickActions actions={quickActions} navigate={navigate} />
-          <div className="mt-6">
-            <RecentSales sales={recentSales} />
+        {/* Optionally Add More Sections */}
+        <div className="mt-10">
+          <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
+          <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+            <p className="text-gray-600 text-sm">
+              No recent activities yet. Start by managing your shops or users.
+            </p>
           </div>
         </div>
       </div>
