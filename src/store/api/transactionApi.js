@@ -17,10 +17,18 @@ export const transactionApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Transaction"],
     }),
+    deleteShopTransaction: builder.mutation({
+      query: ({ shopId, transactionId }) => ({
+        url: `/shop-transaction/delete?shop_id=${shopId}&transaction_id=${transactionId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Transaction"],
+    }),
   }),
 });
 
 export const {
   useGetShopTransactionsQuery,
   useUploadShopTransactionMutation,
+  useDeleteShopTransactionMutation,
 } = transactionApi;

@@ -1,18 +1,48 @@
-import { useGetShopTransactionsQuery } from "../../store/api/transactionApi";
-import { Link, useParams } from "react-router-dom";
-
+import React, { useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import {
+  useGetShopTransactionsQuery,
+  useDeleteShopTransactionMutation,
+} from "../../store/api/transactionApi";
 import DashboardLayout from "../../components/layout/dashboard.layout";
 import ErrorComponent from "../../components/ui/ErrorComponent";
+import TransactionDrawer from "../../components/transaction/TransactionDrawer";
 
 const TransactionsPage = () => {
   const { id } = useParams();
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   const {
     data: transactions = [],
     isLoading,
     error,
   } = useGetShopTransactionsQuery(id);
 
-  if (error) <ErrorComponent />;
+  const [deleteTransaction, { isLoading: isDeleting }] =
+    useDeleteShopTransactionMutation();
+
+  if (error) return <ErrorComponent />;
+
+  const handleDelete = async (transactionId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this transaction?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      await deleteTransaction({ shopId: id, transactionId }).unwrap();
+      alert("Transaction deleted successfully");
+    } catch (err) {
+      console.error("Delete failed:", err);
+      alert("Failed to delete transaction");
+    }
+  };
+
+  const handleRowClick = (transaction) => {
+    setSelectedTransaction(transaction);
+    setIsDrawerOpen(true);
+  };
 
   return (
     <DashboardLayout>
@@ -30,78 +60,61 @@ const TransactionsPage = () => {
         </div>
 
         <div className="grid grid-cols-1">
-          {/* Shop Transactions Table Section*/}
           <div className="bg-white shadow rounded-lg overflow-hidden">
             {isLoading ? (
-              <div className="p-8 text-center">
-                <div className="text-gray-500">Loading shops...</div>
+              <div className="p-8 text-center text-gray-500">
+                Loading transactions...
               </div>
-            ) : transactions.length === 0 ? (
-              <div className="p-8 text-center">
-                <div className="text-gray-500 mb-4">
-                  No shop transactions found
-                </div>
+            ) : transactions.data?.length === 0 ? (
+              <div className="p-8 text-center text-gray-500">
+                No transactions found.
               </div>
             ) : (
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                         Customer Name
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                         Product Name
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                         Quantity
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Total Weight
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Given Amount (Rs.)
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Duration (Days)
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Rate (%)
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Intrest (Rs.)
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                         Actions
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {transactions.data.map((items) => (
-                      <tr>
+                    {transactions.data.map((item) => (
+                      <tr
+                        key={item.id}
+                        className="hover:bg-gray-50 cursor-pointer"
+                        onClick={() => handleRowClick(item)}
+                      >
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {items.Customer.fullname}
+                          {item.Customer?.fullname}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {items.Product.product_name.toUpperCase()}
+                          {item.Product?.product_name?.toUpperCase()}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {items.Product.quantity}
+                          {item.Product?.quantity}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {items.Product.total_weight}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {items.given_amount}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {items.time_duration}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {items.interest_rate}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {items.received_interest}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDelete(item.id);
+                            }}
+                            disabled={isDeleting}
+                            className="text-red-600 hover:text-red-800 font-medium hover:cursor-pointer"
+                          >
+                            {isDeleting ? "Deleting..." : "Delete"}
+                          </button>
                         </td>
                       </tr>
                     ))}
@@ -111,6 +124,13 @@ const TransactionsPage = () => {
             )}
           </div>
         </div>
+
+        {/* Drawer */}
+        <TransactionDrawer
+          isOpen={isDrawerOpen}
+          onClose={() => setIsDrawerOpen(false)}
+          transaction={selectedTransaction}
+        />
       </main>
     </DashboardLayout>
   );
