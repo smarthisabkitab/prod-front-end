@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../store/api/authApi";
 import { setCredentials } from "../store/slices/authSlice";
-import { Eye, EyeOff, LogIn, Sparkles, Gem } from "lucide-react";
+import { Eye, EyeOff, LogIn, Gem } from "lucide-react";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -164,8 +164,13 @@ const LoginPage = () => {
       {/* Add these styles for animations */}
       <style jsx>{`
         @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(5deg); }
+          0%,
+          100% {
+            transform: translateY(0) rotate(0deg);
+          }
+          50% {
+            transform: translateY(-20px) rotate(5deg);
+          }
         }
         .animate-float {
           animation: float 10s ease-in-out infinite;

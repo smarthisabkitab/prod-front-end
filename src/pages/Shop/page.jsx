@@ -76,11 +76,7 @@ const ShopManagementPage = () => {
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200 hover:cursor-pointer">
                       {shops.items.map((shop) => (
-                        <tr
-                          key={shop.id}
-                          className="hover:bg-gray-50"
-                          onClick={() => handleShopTransaction(shop)}
-                        >
+                        <tr key={shop.id} className="hover:bg-gray-50">
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div>
                               <div className="text-sm font-medium text-gray-900">
@@ -89,7 +85,7 @@ const ShopManagementPage = () => {
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {shop.user_id}
+                            {shop.owner_name}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <span
@@ -103,6 +99,12 @@ const ShopManagementPage = () => {
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                            <button
+                              className="text-blue-600 hover:text-blue-900"
+                              onClick={() => handleShopTransaction(shop)}
+                            >
+                              View
+                            </button>
                             <button
                               //   onClick={() => startEditShop(shop)}
                               className="text-yellow-600 hover:text-yellow-900"

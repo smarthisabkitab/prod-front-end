@@ -1,11 +1,15 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import { useCreateShopMutation } from "../../store/api/shopApi";
 import { shopSchema } from "../../utils/validations/shop.schema";
 import DashboardLayout from "../../components/layout/dashboard.layout";
-import { useNavigate } from "react-router-dom";
 
 const AddShopPage = () => {
+  const { user } = useSelector((state) => state.auth);
+
   const [createShop, { isLoading }] = useCreateShopMutation();
   const navigate = useNavigate();
 
@@ -16,13 +20,22 @@ const AddShopPage = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(shopSchema),
+    defaultValues: {
+      user_id: user?.id,
+    },
   });
 
   const onSubmit = async (data) => {
     try {
-      await createShop(data).unwrap();
+      const shop_data = {
+        ...data,
+        user_id: user?.id,
+      };
+
+      console.log("Shop Data to be submitted: ", shop_data);
+      await createShop(shop_data).unwrap();
       reset();
-      navigate("/shop-management"); // Redirect to shop management page
+      navigate("/shop"); // Redirect to shop management page
     } catch (err) {
       console.error("Failed to add shop:", err);
     }
@@ -41,13 +54,13 @@ const AddShopPage = () => {
                 Shop Name *
               </label>
               <input
-                {...register("name")}
+                {...register("shop_name")}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 placeholder="Enter shop name"
               />
-              {errors.name && (
+              {errors.shop_name && (
                 <p className="text-red-500 text-xs mt-1">
-                  {errors.name.message}
+                  {errors.shop_name.message}
                 </p>
               )}
             </div>
@@ -73,13 +86,13 @@ const AddShopPage = () => {
                   Phone *
                 </label>
                 <input
-                  {...register("phone")}
+                  {...register("phone_no")}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
                   placeholder="Enter phone number"
                 />
-                {errors.phone && (
+                {errors.phone_no && (
                   <p className="text-red-500 text-xs mt-1">
-                    {errors.phone.message}
+                    {errors.phone_no.message}
                   </p>
                 )}
               </div>
@@ -105,13 +118,13 @@ const AddShopPage = () => {
                 Owner Name *
               </label>
               <input
-                {...register("owner")}
+                {...register("owner_name")}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 placeholder="Enter owner name"
               />
-              {errors.owner && (
+              {errors.owner_name && (
                 <p className="text-red-500 text-xs mt-1">
-                  {errors.owner.message}
+                  {errors.owner_name.message}
                 </p>
               )}
             </div>
