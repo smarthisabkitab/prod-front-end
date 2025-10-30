@@ -38,6 +38,10 @@ const ShopManagementPage = () => {
     }
   };
 
+  const handleEdit = (shopId) => {
+    navigate(`/shop/edit/${shopId}`);
+  };
+
   const handleShopTransaction = (shop) => {
     navigate(`/shop/transactions/${shop.id}`);
   };
@@ -84,6 +88,13 @@ const ShopManagementPage = () => {
                         Owner
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Contact No.
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Address
+                      </th>
+
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Status
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -100,6 +111,12 @@ const ShopManagementPage = () => {
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                           {shop.owner_name}
                         </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {shop.phone_no}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          {shop.address}
+                        </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span
                             className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
@@ -113,17 +130,20 @@ const ShopManagementPage = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
                           <button
-                            className="text-blue-600 hover:text-blue-900"
+                            className="text-blue-600 hover:text-blue-900 hover:cursor-pointer"
                             onClick={() => handleShopTransaction(shop)}
                           >
-                            View
+                            View |
                           </button>
-                          <button className="text-yellow-600 hover:text-yellow-900">
-                            Edit
+                          <button
+                            className="text-yellow-600 hover:text-yellow-900 hover:cursor-pointer"
+                            onClick={() => handleEdit(shop.id)}
+                          >
+                            Edit |
                           </button>
                           <button
                             onClick={() => setDeleteConfirm(shop)}
-                            className="text-red-600 hover:text-red-900"
+                            className="text-red-600 hover:text-red-900 hover:cursor-pointer"
                           >
                             Delete
                           </button>
@@ -152,14 +172,14 @@ const ShopManagementPage = () => {
             <div className="flex justify-end space-x-3">
               <button
                 onClick={() => setDeleteConfirm(null)}
-                className="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
+                className="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 hover:cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleDelete(deleteConfirm)}
                 disabled={isDeleting}
-                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:opacity-50"
+                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:opacity-50 hover:cursor-pointer"
               >
                 {isDeleting ? "Deleting..." : "Delete"}
               </button>

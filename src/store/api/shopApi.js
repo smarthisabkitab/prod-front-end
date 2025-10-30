@@ -32,8 +32,8 @@ export const shopApi = apiSlice.injectEndpoints({
     }),
     deleteShop: builder.mutation({
       query: (id) => ({
-        url: `/shops/${id}`,
-        method: "DELETE",
+        url: `/shops/delete/${id}`,
+        method: "PUT",
       }),
       invalidatesTags: ["Shop"],
     }),

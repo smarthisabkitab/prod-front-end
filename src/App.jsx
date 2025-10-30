@@ -5,13 +5,16 @@ import HomePage from "./pages/Home/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/Dashboard/DashboardPage";
+
 import ShopManagementPage from "./pages/Shop/page";
 import AddShopPage from "./pages/Shop/AddShopPage";
+import EditShopPage from "./pages/Shop/edit.shop.page";
+import TransactionsPage from "./pages/Transactions/page";
+import UploadTransactionPage from "./pages/Transactions/upload.transaction.page";
+
 import UserManagementPage from "./pages/Users/page";
 import AddUserPage from "./pages/Users/AddUserPage";
 import ConversionPage from "./pages/Conversion/page";
-import TransactionsPage from "./pages/Transactions/page";
-import UploadTransactionPage from "./pages/Transactions/upload.transaction.page";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
@@ -65,6 +68,14 @@ function App() {
               }
             />
             <Route
+              path="/shop/edit/:shop_id"
+              element={
+                <ProtectedRoute>
+                  <EditShopPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/shop/transactions/:id"
               element={
                 <ProtectedRoute>
@@ -96,7 +107,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-             <Route
+            <Route
               path="/user-management/add"
               element={
                 <ProtectedRoute>
