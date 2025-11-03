@@ -46,7 +46,7 @@ const UploadTransactionPage = () => {
     <DashboardLayout>
       <main className="max-w-3xl mx-auto py-10 px-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-6">
-          Upload Transaction for Shop #{shopId}
+          Upload Transaction
         </h2>
 
         {/* Dropzone Area */}
