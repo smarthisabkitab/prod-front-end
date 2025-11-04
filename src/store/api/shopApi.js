@@ -21,8 +21,8 @@ export const shopApi = apiSlice.injectEndpoints({
     }),
     updateShop: builder.mutation({
       query: ({ id, ...shopData }) => ({
-        url: `/shops/${id}`,
-        method: "PUT",
+        url: `/shops/edit/${id}`,
+        method: "PATCH",
         body: shopData,
       }),
       invalidatesTags: (result, error, { id }) => [
