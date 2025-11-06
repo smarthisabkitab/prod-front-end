@@ -1,8 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { apiSlice } from './api/apiSlice';
-import authReducer from './slices/authSlice';
-import shopReducer from './slices/shopSlice';
-import userReducer from './slices/userSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import { apiSlice } from "./api/apiSlice";
+import authReducer from "./slices/authSlice";
+import shopReducer from "./slices/shopSlice";
+import userReducer from "./slices/userSlice";
 import transactionReducer from "./slices/transactionSlice";
 
 export const store = configureStore({
@@ -11,9 +11,8 @@ export const store = configureStore({
     auth: authReducer,
     shop: shopReducer,
     user: userReducer,
-    shopTransaction: transactionReducer
+    shopTransaction: transactionReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
-  devTools: process.env.NODE_ENV !== 'production',
 });

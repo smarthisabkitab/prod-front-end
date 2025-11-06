@@ -1,25 +1,47 @@
-import { apiSlice } from './apiSlice';
+import { apiSlice } from "./apiSlice";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (credentials) => ({
-        url: '/auth/login',
-        method: 'POST',
+        url: "/auth/login",
+        method: "POST",
         body: credentials,
       }),
     }),
     register: builder.mutation({
       query: (userData) => ({
-        url: '/auth/register',
-        method: 'POST',
+        url: "/auth/register",
+        method: "POST",
         body: userData,
       }),
     }),
     getProfile: builder.query({
-      query: () => '/auth/profile',
+      query: () => "/auth/profile",
+      providesTags: ["User"],
+    }),
+    refreshToken: builder.mutation({
+      query: () => ({
+        url: "/auth/refresh-token",
+        method: "POST",
+        credentials: "include",
+      }),
+    }),
+    logout: builder.mutation({
+      query: () => ({
+        url: "/auth/logout",
+        method: "POST",
+        credentials: "include",
+      }),
+      invalidatesTags: ["User"],
     }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useGetProfileQuery } = authApi;
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useGetProfileQuery,
+  useRefreshTokenMutation,
+  useLogoutMutation,
+} = authApi;
