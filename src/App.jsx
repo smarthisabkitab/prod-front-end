@@ -14,6 +14,8 @@ import UploadTransactionPage from "./pages/Transactions/upload.transaction.page"
 
 import UserManagementPage from "./pages/Users/page";
 import AddUserPage from "./pages/Users/AddUserPage";
+import ProfilePage from "./pages/Profile/page";
+
 import ConversionPage from "./pages/Conversion/page";
 
 import { ProtectedRoute } from "./components/ProtectedRoute";
@@ -26,6 +28,7 @@ function App() {
       <Router>
         <div className="App">
           <Routes>
+            {/* Public Routes */}
             <Route path="/" element={<HomePage />} />
             <Route
               path="/login"
@@ -43,6 +46,8 @@ function App() {
                 </PublicRoute>
               }
             />
+
+            {/* Dashboard Layout with Nested Routes */}
             <Route
               path="/dashboard"
               element={
@@ -50,7 +55,26 @@ function App() {
                   <DashboardPage />
                 </ProtectedRoute>
               }
-            />
+            >
+              {/* Nested routes under dashboard */}
+              <Route path="shop" element={<ShopManagementPage />} />
+              <Route path="shop/add" element={<AddShopPage />} />
+              <Route path="shop/edit/:shop_id" element={<EditShopPage />} />
+              <Route
+                path="shop/transactions/:id"
+                element={<TransactionsPage />}
+              />
+              <Route
+                path="shop/upload-transaction/:id"
+                element={<UploadTransactionPage />}
+              />
+              <Route path="conversion" element={<ConversionPage />} />
+              <Route path="user-management" element={<UserManagementPage />} />
+              <Route path="user-management/add" element={<AddUserPage />} />
+              <Route path="profile" element={<ProfilePage />} />
+            </Route>
+
+            {/* Keep old routes for backward compatibility (optional) */}
             <Route
               path="/shop"
               element={

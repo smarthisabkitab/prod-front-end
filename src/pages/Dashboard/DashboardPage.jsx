@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Store, Users, RefreshCcw, User } from "lucide-react";
 
@@ -12,7 +12,6 @@ const baseQuickActions = [
     path: "/shop",
     color: "bg-blue-50 hover:bg-blue-100",
   },
-
   {
     title: "Conversion",
     description: "Check shop conversions and reports",
@@ -24,7 +23,7 @@ const baseQuickActions = [
     title: "Profile",
     description: "Update your personal information",
     icon: <User className="w-8 h-8 text-orange-500" />,
-    path: "/#",
+    path: "/profile",
     color: "bg-orange-50 hover:bg-orange-100",
   },
 ];
@@ -42,9 +41,8 @@ const adminQuickAction = [
 const DashboardPage = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
-  const isAdmin = user?.role === "admin";
 
-  // Combine actions based on user role
+  const isAdmin = user?.role === "admin";
   const quickActions = isAdmin
     ? [baseQuickActions[0], adminQuickAction, ...baseQuickActions.slice(1)]
     : baseQuickActions;
@@ -52,49 +50,62 @@ const DashboardPage = () => {
   return (
     <DashboardLayout>
       <div className="p-6">
-        {/* Heading */}
-        <h1 className="text-2xl font-semibold mb-6">Welcome back 👋</h1>
-        {user?.role && (
-          <p className="text-gray-600 mt-1">
-            Role: <span className="capitalize font-medium">{user.role}</span>
-          </p>
-        )}
-        {/* Quick Actions */}
-        <div
-          className={`grid gap-6 ${
-            quickActions.length === 4
-              ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
-              : quickActions.length === 3
-              ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-              : "grid-cols-1 sm:grid-cols-2"
-          }`}
-        >
-          {quickActions.map((action, idx) => (
-            <div
-              key={idx}
-              onClick={() => navigate(action.path)}
-              className={`cursor-pointer p-5 rounded-2xl shadow-md transition-all duration-200 ${action.color} border border-transparent hover:border-gray-300`}
-            >
-              <div className="flex items-center gap-4">
-                {action.icon}
-                <div>
-                  <h2 className="text-lg font-medium">{action.title}</h2>
-                  <p className="text-sm text-gray-600">{action.description}</p>
+        {/* Check if we're on the dashboard home or a nested route */}
+        {!window.location.pathname.includes("/dashboard/") ||
+        window.location.pathname === "/dashboard" ? (
+          <>
+            {/* Welcome Message */}
+            <div className="mb-6">
+              <h1 className="text-2xl font-semibold">
+                Welcome back, {user?.fullname || user?.name || "User"} 👋
+              </h1>
+              {user?.role && (
+                <p className="text-gray-600 mt-1">
+                  Role:{" "}
+                  <span className="capitalize font-medium">{user.role}</span>
+                </p>
+              )}
+            </div>
+
+            {/* Quick Actions */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {quickActions.map((action, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => navigate(`/dashboard${action.path}`)}
+                  className={`cursor-pointer p-5 rounded-2xl shadow-md transition-all duration-200 ${action.color} border border-transparent hover:border-gray-300`}
+                >
+                  <div className="flex items-center gap-4">
+                    {action.icon}
+                    <div>
+                      <h2 className="text-lg font-medium">{action.title}</h2>
+                      <p className="text-sm text-gray-600">
+                        {action.description}
+                      </p>
+                    </div>
+                  </div>
                 </div>
+              ))}
+            </div>
+
+            {/* Recent Activity Section */}
+            <div className="mt-10">
+              <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
+              <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                <p className="text-gray-600 text-sm">
+                  No recent activities yet. Start by managing your{" "}
+                  {isAdmin
+                    ? "shops, users, or conversions"
+                    : "shops or conversions"}
+                  .
+                </p>
               </div>
             </div>
-          ))}
-        </div>
-
-        {/* Optionally Add More Sections */}
-        <div className="mt-10">
-          <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
-          <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
-            <p className="text-gray-600 text-sm">
-              No recent activities yet. Start by managing your shops or users.
-            </p>
-          </div>
-        </div>
+          </>
+        ) : (
+          // Render nested routes content
+          <Outlet />
+        )}
       </div>
     </DashboardLayout>
   );

@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import DashboardLayout from "../../components/layout/dashboard.layout";
+import { useState } from "react";
 
 const ConversionPage = () => {
   const gramPerAana = 0.728987738;
@@ -55,8 +54,8 @@ const ConversionPage = () => {
   };
 
   return (
-    <DashboardLayout>
-      <div className="max-w-4xl mx-auto p-6">
+    <>
+      <div className="max-w-7xl mx-auto p-6">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">
             Gold & Silver Converter
@@ -140,7 +139,7 @@ const ConversionPage = () => {
           </ul>
         </div>
       </div>
-    </DashboardLayout>
+    </>
   );
 };
 

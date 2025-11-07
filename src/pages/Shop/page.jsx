@@ -7,7 +7,6 @@ import {
   useDeleteShopMutation,
 } from "../../store/api/shopApi";
 
-import DashboardLayout from "../../components/layout/dashboard.layout";
 import ErrorComponent from "../../components/ui/ErrorComponent";
 
 const ShopManagementPage = () => {
@@ -49,13 +48,11 @@ const ShopManagementPage = () => {
   if (error) return <ErrorComponent message="Failed to load shops." />;
   if (isLoading)
     return (
-      <DashboardLayout>
-        <div className="p-8 text-center text-gray-500">Loading shops...</div>
-      </DashboardLayout>
+      <div className="p-8 text-center text-gray-500">Loading shops...</div>
     );
 
   return (
-    <DashboardLayout>
+    <>
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="flex justify-end mb-6">
           <Link
@@ -187,7 +184,7 @@ const ShopManagementPage = () => {
           </div>
         </div>
       )}
-    </DashboardLayout>
+    </>
   );
 };
 
