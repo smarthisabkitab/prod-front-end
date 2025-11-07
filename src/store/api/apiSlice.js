@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { logout, setCredentials } from "../slices/authSlice";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:9000/api/v1",
-  // baseUrl: "https://api.smarthisabkitab.com/api/v1",
+  // baseUrl: "http://localhost:9000/api/v1",
+  baseUrl: "https://api.smarthisabkitab.com/api/v1",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.accessToken;
