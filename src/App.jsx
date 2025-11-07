@@ -16,7 +16,7 @@ import UserManagementPage from "./pages/Users/page";
 import AddUserPage from "./pages/Users/AddUserPage";
 import ConversionPage from "./pages/Conversion/page";
 
-import ProtectedRoute from "./components/ProtectedRoute";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 import "./App.css";
 

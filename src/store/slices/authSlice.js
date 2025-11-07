@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// Helper to get token from localStorage
 const getStoredToken = () => {
   try {
     return localStorage.getItem("accessToken");
@@ -41,5 +42,14 @@ const authSlice = createSlice({
   },
 });
 
+// Export actions
 export const { setCredentials, logout, setLoading } = authSlice.actions;
+
+// Export selectors
+export const selectCurrentUser = (state) => state.auth.user;
+export const selectAccessToken = (state) => state.auth.accessToken;
+export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
+export const selectAuthLoading = (state) => state.auth.isLoading;
+
+// Export reducer
 export default authSlice.reducer;

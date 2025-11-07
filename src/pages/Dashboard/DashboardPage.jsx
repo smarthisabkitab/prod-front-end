@@ -1,9 +1,10 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Store, Users, RefreshCcw, User } from "lucide-react";
+
 import DashboardLayout from "../../components/layout/dashboard.layout";
 
-const quickActions = [
+const baseQuickActions = [
   {
     title: "Shops",
     description: "Manage all your registered shops",
@@ -11,13 +12,7 @@ const quickActions = [
     path: "/shop",
     color: "bg-blue-50 hover:bg-blue-100",
   },
-  {
-    title: "Users",
-    description: "View and manage users",
-    icon: <Users className="w-8 h-8 text-green-500" />,
-    path: "/user-management",
-    color: "bg-green-50 hover:bg-green-100",
-  },
+
   {
     title: "Conversion",
     description: "Check shop conversions and reports",
@@ -34,22 +29,51 @@ const quickActions = [
   },
 ];
 
+const adminQuickAction = [
+  {
+    title: "Users",
+    description: "View and manage users",
+    icon: <Users className="w-8 h-8 text-green-500" />,
+    path: "/user-management",
+    color: "bg-green-50 hover:bg-green-100",
+  },
+];
+
 const DashboardPage = () => {
   const navigate = useNavigate();
+  const user = useSelector((state) => state.auth.user);
+  const isAdmin = user?.role === "admin";
+
+  // Combine actions based on user role
+  const quickActions = isAdmin
+    ? [baseQuickActions[0], adminQuickAction, ...baseQuickActions.slice(1)]
+    : baseQuickActions;
 
   return (
     <DashboardLayout>
       <div className="p-6">
         {/* Heading */}
         <h1 className="text-2xl font-semibold mb-6">Welcome back 👋</h1>
-
+        {user?.role && (
+          <p className="text-gray-600 mt-1">
+            Role: <span className="capitalize font-medium">{user.role}</span>
+          </p>
+        )}
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div
+          className={`grid gap-6 ${
+            quickActions.length === 4
+              ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+              : quickActions.length === 3
+              ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+              : "grid-cols-1 sm:grid-cols-2"
+          }`}
+        >
           {quickActions.map((action, idx) => (
             <div
               key={idx}
               onClick={() => navigate(action.path)}
-              className={`cursor-pointer p-5 rounded-2xl shadow-md transition-all duration-200 ${action.color}`}
+              className={`cursor-pointer p-5 rounded-2xl shadow-md transition-all duration-200 ${action.color} border border-transparent hover:border-gray-300`}
             >
               <div className="flex items-center gap-4">
                 {action.icon}
