@@ -20,7 +20,7 @@ const Breadcrumb = () => {
           </Link>
         </li>
         {pathnames.map((value, idx) => {
-          const to = `/${pathnames.slice(0, idx + 1).join("/")}`;
+          const to = `/dashboard/${pathnames.slice(0, idx + 1).join("/")}`;
           const isLast = idx === pathnames.length - 1;
           return (
             <li key={to} className="flex items-center">

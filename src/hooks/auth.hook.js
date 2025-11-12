@@ -89,6 +89,8 @@ export const useTokenRefresh = () => {
           })
         );
         return response.accessToken;
+      } else {
+        throw new Error("Refresh token failed");
       }
     } catch (error) {
       console.error("Token refresh failed:", error);
@@ -99,4 +101,31 @@ export const useTokenRefresh = () => {
   };
 
   return refresh;
+};
+
+export const useAuthInit = () => {
+  const dispatch = useDispatch();
+  const refresh = useTokenRefresh();
+
+  const initializeAuth = async () => {
+    const storedToken = localStorage.getItem("accessToken");
+    const storedUser = localStorage.getItem("user");
+
+    if (storedToken && storedUser) {
+      try {
+        // We have a token, verify it's still valid by refreshing
+        await refresh();
+        console.log("Authentication restored successfully");
+      } catch (error) {
+        console.log("Stored token is invalid, clearing auth state");
+        console.error(error);
+        dispatch(logoutAction());
+      }
+    } else {
+      // No stored token, ensure clean state
+      dispatch(logoutAction());
+    }
+  };
+
+  return initializeAuth;
 };

@@ -16,10 +16,6 @@ export const authApi = apiSlice.injectEndpoints({
         body: userData,
       }),
     }),
-    getProfile: builder.query({
-      query: () => "/auth/profile",
-      providesTags: ["User"],
-    }),
     refreshToken: builder.mutation({
       query: () => ({
         url: "/auth/refresh-token",

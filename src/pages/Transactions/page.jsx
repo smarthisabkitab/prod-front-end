@@ -44,6 +44,12 @@ const TransactionsPage = () => {
     setIsDrawerOpen(true);
   };
 
+  const handleUpdateTransaction = (transactionId, updatedData) => {
+    // Make API call to update the transaction
+    console.log("Updating:", transactionId, updatedData);
+    // Your update logic here
+  };
+
   return (
     <DashboardLayout>
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
@@ -130,6 +136,7 @@ const TransactionsPage = () => {
           isOpen={isDrawerOpen}
           onClose={() => setIsDrawerOpen(false)}
           transaction={selectedTransaction}
+          onUpdate={handleUpdateTransaction}
         />
       </main>
     </DashboardLayout>

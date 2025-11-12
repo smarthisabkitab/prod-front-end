@@ -10,12 +10,22 @@ const getStoredToken = () => {
   }
 };
 
+const getStoredUser = () => {
+  try {
+    const user = localStorage.getItem("user");
+    return user ? JSON.parse(user) : null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     accessToken: getStoredToken(),
-    user: null,
-    isAuthenticated: false,
+    user: getStoredUser(),
+    isAuthenticated: !getStoredToken(),
     isLoading: false,
   },
   reducers: {
