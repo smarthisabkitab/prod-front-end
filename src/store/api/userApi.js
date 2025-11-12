@@ -18,21 +18,19 @@ export const userApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
-    updateUser: builder.mutation({
-      query: ({ id, ...userData }) => ({
-        url: `/users/${id}`,
-        method: "PUT",
-        body: userData,
-      }),
-      invalidatesTags: (result, error, { id }) => [
-        { type: "User", id },
-        "User",
-      ],
-    }),
     deleteUser: builder.mutation({
       query: () => ({
         url: `/auth/delete-profile`,
         method: "DELETE",
+      }),
+      invalidatesTags: ["User"],
+      credentials: "include",
+    }),
+    updateProfile: builder.mutation({
+      query: (userData) => ({
+        url: `/users/edit-profile`,
+        method: "PATCH",
+        body: userData,
       }),
       invalidatesTags: ["User"],
       credentials: "include",
@@ -44,6 +42,6 @@ export const {
   useGetUsersQuery,
   useGetUserQuery,
   useCreateUserMutation,
-  useUpdateUserMutation,
   useDeleteUserMutation,
+  useUpdateProfileMutation,
 } = userApi;
