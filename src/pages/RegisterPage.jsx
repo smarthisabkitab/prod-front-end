@@ -74,7 +74,9 @@ const RegisterPage = () => {
           <h1 className="text-3xl font-bold text-amber-900 mb-2">
             Create Account
           </h1>
-          <p className="text-amber-700">Join our jewellery management platform</p>
+          <p className="text-amber-700">
+            Join our jewellery management platform
+          </p>
         </div>
 
         {error && (
@@ -262,8 +264,13 @@ const RegisterPage = () => {
       {/* Add these styles for animations */}
       <style jsx>{`
         @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(5deg); }
+          0%,
+          100% {
+            transform: translateY(0) rotate(0deg);
+          }
+          50% {
+            transform: translateY(-20px) rotate(5deg);
+          }
         }
         .animate-float {
           animation: float 10s ease-in-out infinite;
