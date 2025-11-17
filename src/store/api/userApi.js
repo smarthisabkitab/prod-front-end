@@ -35,6 +35,15 @@ export const userApi = apiSlice.injectEndpoints({
       invalidatesTags: ["User"],
       credentials: "include",
     }),
+    updateProfilePassword: builder.mutation({
+      query: (userData) => ({
+        url: `/auth/profile-update-password`,
+        method: "PATCH",
+        body: userData,
+      }),
+      invalidatesTags: ["User"],
+      credentials: "include",
+    }),
   }),
 });
 
@@ -44,4 +53,5 @@ export const {
   useCreateUserMutation,
   useDeleteUserMutation,
   useUpdateProfileMutation,
+  useUpdateProfilePasswordMutation,
 } = userApi;

@@ -28,7 +28,7 @@ const baseQuickActions = [
   },
 ];
 
-const adminQuickAction = [
+const adminQuickActions = [
   {
     title: "Users",
     description: "View and manage users",
@@ -44,7 +44,7 @@ const DashboardPage = () => {
 
   const isAdmin = user?.role === "admin";
   const quickActions = isAdmin
-    ? [baseQuickActions[0], adminQuickAction, ...baseQuickActions.slice(1)]
+    ? [...baseQuickActions, ...adminQuickActions]
     : baseQuickActions;
 
   return (

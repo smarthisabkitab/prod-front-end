@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Lock, Save, X } from "lucide-react";
+import { useUpdateProfilePasswordMutation } from "../../../store/api/userApi";
 
 const PasswordChangeForm = () => {
   const [isEditingPassword, setIsEditingPassword] = useState(false);
@@ -9,6 +10,7 @@ const PasswordChangeForm = () => {
     confirmPassword: "",
   });
   const [isPasswordLoading, setIsPasswordLoading] = useState(false);
+  const [updateProfilePassword] = useUpdateProfilePasswordMutation();
 
   const handlePasswordChange = (e) => {
     const { name, value } = e.target;
@@ -20,35 +22,39 @@ const PasswordChangeForm = () => {
 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
+
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      alert("New passwords do not match!");
+      return;
+    }
+
+    if (passwordData.newPassword.length < 6) {
+      alert("Password must be at least 6 characters long!");
+      return;
+    }
+
     setIsPasswordLoading(true);
 
     try {
-      // TODO: Add API call to change password
-      console.log("Changing password:", passwordData);
+      const body = {
+        oldPassword: passwordData.currentPassword,
+        newPassword: passwordData.newPassword,
+      };
 
-      if (passwordData.newPassword !== passwordData.confirmPassword) {
-        alert("New passwords do not match!");
-        return;
-      }
+      const res = await updateProfilePassword(body).unwrap();
 
-      if (passwordData.newPassword.length < 6) {
-        alert("Password must be at least 6 characters long!");
-        return;
-      }
-
-      // Simulate API call - Replace with actual API
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      alert(res?.message || "Password updated successfully!");
 
       setPasswordData({
         currentPassword: "",
         newPassword: "",
         confirmPassword: "",
       });
+
       setIsEditingPassword(false);
-      alert("Password changed successfully!");
     } catch (error) {
-      console.error("Error changing password:", error);
-      alert("Error changing password. Please try again.");
+      console.error("Error updating password:", error);
+      alert(error?.data?.message || "Unable to update password");
     } finally {
       setIsPasswordLoading(false);
     }
@@ -62,7 +68,6 @@ const PasswordChangeForm = () => {
     });
     setIsEditingPassword(false);
   };
-
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
       <div className="flex justify-between items-center mb-6">
