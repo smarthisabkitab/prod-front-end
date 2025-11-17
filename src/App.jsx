@@ -4,8 +4,7 @@ import { PersistGate } from "redux-persist/integration/react";
 
 import { store, persistor } from "./store/store";
 import HomePage from "./pages/Home/HomePage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
+import AuthPage from "./pages/auth.page";
 import DashboardPage from "./pages/Dashboard/DashboardPage";
 
 import ShopManagementPage from "./pages/Shop/page";
@@ -34,22 +33,21 @@ function App() {
               {/* Public Routes */}
               <Route path="/" element={<HomePage />} />
               <Route
-                path="/login"
+                path="/auth"
                 element={
                   <PublicRoute>
-                    <LoginPage />
+                    <AuthPage />
                   </PublicRoute>
                 }
               />
               <Route
-                path="/register"
+                path="/auth"
                 element={
                   <PublicRoute>
-                    <RegisterPage />
+                    <AuthPage />
                   </PublicRoute>
                 }
               />
-
               {/* Dashboard Layout with Nested Routes */}
               <Route
                 path="/dashboard"

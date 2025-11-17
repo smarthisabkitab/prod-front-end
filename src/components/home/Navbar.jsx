@@ -47,18 +47,11 @@ const Navbar = () => {
         {!isAuthenticated ? (
           <>
             <Link
-              to="/login"
+              to="/auth"
               className="flex items-center space-x-2 px-6 py-3 bg-white text-amber-700 rounded-xl border border-amber-200 shadow-md hover:bg-amber-50"
             >
               <LogIn size={20} />
-              <span className="font-medium">Login</span>
-            </Link>
-            <Link
-              to="/register"
-              className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl hover:from-amber-600 hover:to-orange-600 shadow-md"
-            >
-              <UserPlus size={20} />
-              <span className="font-medium">Register</span>
+              <span className="font-medium">Profile</span>
             </Link>
           </>
         ) : (
